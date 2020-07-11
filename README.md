@@ -19,8 +19,21 @@ Jenkins pipeline + gitlab + docker implement CI / CD function
 阿里云容器Hub服务提供了官方的镜像站点加速官方镜像的下载速度(注册账号就可以免费使用)
 #### 一. 获取阿里云镜像加速地址
 登录阿里云控制台[容器Hub服务](https://cr.console.aliyun.com/cn-zhangjiakou/instances/repositories)，获取阿里云为你分配的镜像加速地址
-![enter image description here](https://s1.ax1x.com/2020/07/10/UMtwyF.png)
+![enter image description here](https://s1.ax1x.com/2020/07/11/U1lSeA.png)
 #### 二. 配置Docker镜像加速
+修改**daemon**配置文件**/etc/docker/daemon.json**来使用加速器
+``` bash
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://g47y4ga4.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+替换你的加速地址并执行这条命令完成设置
+
 ## Jenkins 安装
 ## Gitlab 安装
 ## pipeline 构建
